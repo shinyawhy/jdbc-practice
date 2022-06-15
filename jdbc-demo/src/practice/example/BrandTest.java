@@ -80,4 +80,79 @@ public class BrandTest {
         conn.close();
 
     }
+/**
+ * 增加
+ */
+    @Test
+    public void testAdd() throws Exception {
+        String brandName = "nike";
+        String companyName = "Nike";
+        int ordered = 1;
+        String description = "to be  or not to be";
+        int b_status = 1;
+
+        // 1. 获取conn
+        Properties prop = new Properties();
+        prop.load(new FileInputStream("C:\\Users\\50506\\IdeaProjects\\jdbc\\jdbc-demo\\src\\druid.properties"));
+        DataSource dataSource = DruidDataSourceFactory.createDataSource(prop);
+
+        //5.获取数据库链接
+        Connection conn = dataSource.getConnection();
+
+        // 2. 定义sql
+        String sql = "Insert Into tb_brand(brand_name, company_name, ordered, description, b_status) values(?,?,?,?,?)";
+
+        // 3. 获取pstmt对象
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        // 4. 设置参数
+        pstmt.setString(1, brandName);
+        pstmt.setString(2, companyName);
+        pstmt.setInt(3, ordered);
+        pstmt.setString(4, description);
+        pstmt.setInt(5, b_status);
+
+
+        // 5. 执行sql
+//        ResultSet rs = pstmt.executeQuery();
+
+        int count = pstmt.executeUpdate();
+        // 6. 处理结果 List<Brand> 封装对象， 装载list集合
+
+        System.out.println(count > 0);
+
+//        Brand brand = null;
+//        List<Brand> list = new ArrayList<>();
+//        while (rs.next()) {
+//            // 获取数据
+//            int id = rs.getInt("id");
+//            String brandName = rs.getString("brand_name");
+//            String companyName = rs.getString("company_name");
+//            int ordered = rs.getInt("ordered");
+//            String description = rs.getString("description");
+//            int b_status = rs.getInt("b_status");
+//            // 封装对象
+//            Brand brand = new Brand();
+//            brand.setId(id);
+//            brand.setBrandName(brandName);
+//            brand.setCompanyName(companyName);
+//            brand.setOrdered(ordered);
+//            brand.setDescription(description);
+//            brand.setB_status(b_status);
+//            // 装载集合
+//            System.out.println(brand);
+//            System.out.println("=================");
+//            list.add(brand);
+//
+//
+//        }
+//        System.out.println(list);
+
+        // 释放资源
+
+//        rs.close();
+        pstmt.close();
+        conn.close();
+
+    }
 }
